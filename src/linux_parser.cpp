@@ -142,7 +142,7 @@ long LinuxParser::Jiffies()
 long LinuxParser::ActiveJiffies(int pid) 
 { 
   string line;
-  int iterations{0};
+  string iterations{};
   long active{0};
   long total_active{0};
   std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatFilename);
@@ -162,7 +162,6 @@ long LinuxParser::ActiveJiffies(int pid)
     }
 
   }
-
   return total_active; 
 }
 
