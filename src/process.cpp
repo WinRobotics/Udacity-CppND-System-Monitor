@@ -27,13 +27,12 @@ int Process::Pid()
 float Process::CpuUtilization () const 
 {
    //active jiffies pid / (Uptime - Pid Uptime)
-   long total_time_ = LinuxParser::ActiveJiffies(pid_);
-   total_time_ = total_time_/sysconf(_SC_CLK_TCK);
-   long Uptime_ = LinuxParser::UpTime();
-   long Uptime_pid_ = LinuxParser::UpTime(pid_);
-   long seconds_ = Uptime_ - Uptime_pid_;
-   float cpu_uti_ = static_cast<float>((1.0*(total_time_) / seconds_));
-   return cpu_uti_;   
+  long total_time = LinuxParser::ActiveJiffies(pid_);
+  long seconds = LinuxParser::UpTime() - (LinuxParser::UpTime(pid_));
+  long total_time_seconds = total_time / sysconf(_SC_CLK_TCK);
+  float cpu_util_ = (float)total_time_seconds / seconds;
+  //std::cout<<seconds<<std::endl;
+  return cpu_util_;
 }
 
 // TODO: Return the command that generated this process.
